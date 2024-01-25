@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>사원 정보 입력 폼</title>
+</head>
+<body>
+	<h1>사원 정보 입력</h1>
+	<form th:action="@{/hr/insert}" method="post" th:object="${emp}">
+	<table border="1">
+		<tr>
+			<th>사원 아이디</th>
+			<td>
+				<!--<input type="number" name="employeeId" th:value="{employeeId}">-->
+				<input type="number" th:field="*{employeeId}">
+				<span th:errors="*{employeeId}"></span>
+				<span th:if="${#fields.hasErrors('employeeId')}">사원 정보 오류</span>
+			</td>
+		</tr>
+		<tr>
+			<th>이름</th>
+			<td>
+				<input type="text" th:field="*{firstName}">
+				<span th:errors="*{firstName}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>성</th>
+			<td>
+				<input type="text" th:field="*{lastName}">
+				<span th:errors="*{lastName}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td>
+				<input type="text" th:field="*{email}">
+				<span th:errors="*{email}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>전화번호</th>
+			<td>
+				<input type="text" th:field="*{phoneNumber}">
+				<span th:errors="*{phoneNumber}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>입사일</th>
+			<td>
+				<input type="date" th:field="*{hireDate}">
+				<span th:errors="*{hireDate}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>직무 아이디</th>
+			<td>
+				<select name="jobId">
+					<option type="text" 
+					th:each="job:${jobList}" 
+					th:value="${job.jobId}" 
+					th:utext="${job.jobId}"
+					th:selected="*{jobId}==${job.jobId}">
+					<!--
+					th:selected="${emp.jobId}==${job.jobId}로 써도 된다.
+					선택된 직무 아이디를 저장을 눌렀을 떄, 입력 양식에 맞지 않아 같으 화면으로 되돌아오는 경우 선택했던 값을 그대로 보여주기 위해 추가
+					-->
+					</option>
+				</select>
+				
+			</td>
+		</tr>
+		<tr>
+			<th>급여</th>
+			<td>
+				<input type="number" th:field="*{salary}">
+				<span th:errors="*{salary}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>보너스율</th>
+			<td><!--number >> 0~1밖에 안 됨 step 설정 필요-->
+				<!--<input type="number" min="0" max="0.99" th:field="*{commissionPct}">-->
+				<input type="number" step="0.01" th:field="*{commissionPct}">
+				<span th:errors="*{commissionPct}"></span>
+			</td>
+		</tr>
+		<tr>
+			<th>관리자 아이디</th>
+			<td>
+				<select name="managerId">
+					<option type="text" 
+					th:each="manager:${managerList}" 
+					th:value="${manager.managerId}" 
+					th:utext="${manager.managerId}"
+					selected="*{managerId}==${manager.managerId}"
+					></option>
+				</select>				
+			</td>
+		</tr>
+		<tr>
+			<th>부서 아이디</th>
+			<td>
+				<select name="departmentId">
+					<option type="number" 
+					th:each="dept:${deptList}" 
+					th:value="${dept.departmentId}" 
+					th:utext="${dept.departmentName}"
+					th:selected="*{departmentId}==${dept.departmentId}"
+					></option>				
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<input type="submit" value="저장">
+				<input type="reset" value="취소">	
+			</td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>
