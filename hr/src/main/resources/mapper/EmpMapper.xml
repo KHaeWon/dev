@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hr.repository.IEmpRepository">
+	<select id="getEmpCount" parameterType="int" resultType="int">
+
+<!-- xml >> 첫줄에 공백, 빈줄, 주석 안 됨 -->
+<!-- namespace로 repository가 있는 곳 패키지 풀패스로 적어줌 -->
+	
+		select count(*) from employees 
+		<!-- 
+			getEmpCount 메서드가 중복되어 있으므로 동적 쿼리로 처리해야 한다.
+			id는 유일해야 하므로 메서드 이름이 같다고 id값을 동일하게 적용하면 안 된다.
+		-->
+		<if test="deptid != null">
+			<!-- 인자 유무에 따라 where절 실행이 결정됨 -->
+			where department_id = #{deptid}
+		</if>
+	</select>
+	
+</mapper>
+
+<!-- select>> 인터페이스의 메서드를 구현하는 태그
+	id : 메서드의 이름, 유일해야 함. 
+		인터페이스의 메서드가 중복 정의되어 있으면, 조건에 따라 파라미터가 
+		있을 수도 있고 없을 수도 있음을 알려주면 됨 -> 동적 쿼리
+	parameterType, resultType이 String이면 string으로 적어줘야 함
+	parameter가 2개 이상이면 hashmap으로 적어주면 됨
+	-->
+	<!-- <![CDATA[]]> 
+		<>가 들어가도 파싱하지 말고 그냥 진행하라는 태그 
+		BoardMapper 참조-->
