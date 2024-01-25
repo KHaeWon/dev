@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hr.repository.IEmpRepository">
+	
+	<!-- getEmpCount : 회원 수 조회 >> 회원 존재 유무 판단을 위해 추가 -->
+	<select id="getEmpCount" parameterType="int" resultType="int">
+		select count(*) from employees
+		<if test="deptid != null"> 
+			where DEPARTMENT_ID = #{deptid}
+		</if>
+	</select>
+	
+	
+		
+</mapper>
